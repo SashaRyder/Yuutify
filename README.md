@@ -37,10 +37,6 @@ To get started with Yuutify, follow these steps:
 
 If you would like to contribute to Yuutify, feel free to open issues, submit pull requests, or provide feedback. We welcome contributions from the community to enhance and improve the application.
 
-### Development Setup
-
-To contribute to Yuutify, follow the steps mentioned in the [Contributing Guidelines](CONTRIBUTING.md) for a smooth development experience.
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
