@@ -2,7 +2,7 @@ import fs from "fs/promises";
 import { google, youtube_v3 } from "googleapis";
 import { OAuth2Client } from "google-auth-library";
 import { ipcMain } from "electron";
-var OAuth2 = google.auth.OAuth2;
+const OAuth2 = google.auth.OAuth2;
 
 interface ClientSecretJson {
   installed: Installed;
@@ -50,10 +50,10 @@ export class YouTubeService {
     if (!this.clientSecret) {
       return;
     }
-    var clientSecret = this.clientSecret.installed.client_secret;
-    var clientId = this.clientSecret.installed.client_id;
-    var redirectUrl = this.clientSecret.installed.redirect_uris[0];
-    var oauth2Client = new OAuth2(clientId, clientSecret, redirectUrl);
+    const clientSecret = this.clientSecret.installed.client_secret;
+    const clientId = this.clientSecret.installed.client_id;
+    const redirectUrl = this.clientSecret.installed.redirect_uris[0];
+    const oauth2Client = new OAuth2(clientId, clientSecret, redirectUrl);
 
     await fs
       .readFile(this.TOKEN_PATH, { encoding: "utf8" })
@@ -63,7 +63,7 @@ export class YouTubeService {
         ipcMain.emit("authenticated", null);
       })
       .catch(() => {
-        var authUrl = oauth2Client.generateAuthUrl({
+        const authUrl = oauth2Client.generateAuthUrl({
           access_type: "offline",
           scope: this.SCOPES,
         });
@@ -75,10 +75,10 @@ export class YouTubeService {
     if (!this.clientSecret) {
       return;
     }
-    var clientSecret = this.clientSecret.installed.client_secret;
-    var clientId = this.clientSecret.installed.client_id;
-    var redirectUrl = this.clientSecret.installed.redirect_uris[0];
-    var oauth2Client = new OAuth2(clientId, clientSecret, redirectUrl);
+    const clientSecret = this.clientSecret.installed.client_secret;
+    const clientId = this.clientSecret.installed.client_id;
+    const redirectUrl = this.clientSecret.installed.redirect_uris[0];
+    const oauth2Client = new OAuth2(clientId, clientSecret, redirectUrl);
 
     oauth2Client.getToken(code, async (err, token) => {
       if (err) {
@@ -105,7 +105,7 @@ export class YouTubeService {
     if (!this.authClient) {
       return [];
     }
-    var service = google.youtube("v3");
+    const service = google.youtube("v3");
     try {
       const response = await service.playlists.list({
         auth: this.authClient,
