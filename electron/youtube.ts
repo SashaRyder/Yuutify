@@ -46,7 +46,7 @@ export class YouTubeService {
     }
   };
 
-  authoriseUser = async (): Promise<void> => {
+  authoriseUser = async (openAuthUrl = true): Promise<void> => {
     if (!this.clientSecret) {
       return;
     }
@@ -63,6 +63,7 @@ export class YouTubeService {
         ipcMain.emit("authenticated", null);
       })
       .catch(() => {
+        if(!openAuthUrl) return;
         const authUrl = oauth2Client.generateAuthUrl({
           access_type: "offline",
           scope: this.SCOPES,

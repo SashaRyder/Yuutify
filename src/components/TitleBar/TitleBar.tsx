@@ -1,3 +1,4 @@
+import { EVENTS } from "../../events";
 import {
   AppOption,
   AppOptions,
@@ -8,7 +9,7 @@ import {
 const TitleBar = () => {
 
   const closeApp = () => {
-    window.api.send("quit", null);
+    window.api.send(EVENTS.QUIT, null);
   }
   
   return (

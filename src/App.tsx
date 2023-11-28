@@ -15,13 +15,11 @@ function App() {
   const [playlists, setPlaylists] = useState<youtube_v3.Schema$Playlist[]>([]);
 
   useEffect(() => {
-    window.api.send(EVENTS.APP_READY, null);
-  }, []);
-
-  useEffect(() => {
     const playlistReciever =  window.api.receive<youtube_v3.Schema$Playlist[]>(EVENTS.LOAD_PLAYLISTS, (playlists) => {
       setPlaylists(playlists);
     });
+
+    window.api.send(EVENTS.REQUEST_PLAYLISTS, null);
 
     return () => {
       playlistReciever();

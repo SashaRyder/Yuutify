@@ -54,7 +54,7 @@ expressApp.get('/auth_callback', async (req, res) => {
   }
     const code = req.query.code;
     await YTService?.handleCode(code as string);
-    res.sendStatus(200);
+    res.send("Thank you, you may now close this tab and return to Yuutify");
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -80,13 +80,20 @@ app.whenReady().then(async () => {
 });
 
 ipcMain.on(EVENTS.APP_READY, async  () => {
-  YTService = await YouTubeService.createService()
-  await YTService.authoriseUser();
-})
+  YTService = await YouTubeService.createService();
+  await YTService?.authoriseUser(false);
+});
+
+ipcMain.on(EVENTS.OPEN_AUTHENTICATE_URL, async () => {
+  await YTService?.authoriseUser();
+});
 
 ipcMain.on("authenticated", async () => {
-  const plists = await YTService?.getPlaylists();
-  win?.webContents.send(EVENTS.LOAD_PLAYLISTS, plists);
+  win?.webContents.send(EVENTS.AUTHENTICATED, null);
+})
+ipcMain.on(EVENTS.REQUEST_PLAYLISTS, async () => {
+  const playlists = await YTService?.getPlaylists();
+  win?.webContents.send(EVENTS.LOAD_PLAYLISTS,  playlists);
 })
 
 ipcMain.on(EVENTS.QUIT, async () => {
